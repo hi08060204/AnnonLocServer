@@ -3,6 +3,13 @@ var router = require('./router');
 var app = express();
 var port = 3000;
 
+app.use(express.static('public'));
+
+app.use(function(req, res, next) {
+    console.log(req.method, req.url);
+    next();
+});
+
 app.use('/', router);
 
 // catch 404 and forward to error handler 
