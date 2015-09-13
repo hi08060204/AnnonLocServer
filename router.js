@@ -3,7 +3,7 @@ var router = express.Router();
 var db = require('mongoskin')
     .db('mongodb://localhost:27017/AnnonLoc');
 var ObjectID = require('mongoskin').ObjectID;
-
+var host = 'http://ec2-52-88-224-149.us-west-2.compute.amazonaws.com:3000';
 
 getNearbyLocation = function(req, res, next) {
     db.collection('location')
@@ -20,7 +20,7 @@ getNearbyLocation = function(req, res, next) {
                     'name' : locations[i].name,
                     'latitude' : locations[i].latitude,
                     'longitude' : locations[i].longitude,
-                    'img' : locations[i].img
+                    'img' : host + locations[i].img
                 }
                 lid.push(locations[i]._id);
             }
@@ -112,7 +112,19 @@ router.get('/locations/:lid', function(req, res, next) {
  * Receive post for specified location and retrieve comments
  */
 router.post('/locations/:lid', function(req, res, next) {
-    res.send("post to" + req.params.lid + "!");
+    var newComment = {
+       'text': req.params.text,
+       'locId': req.params.locId,
+       'time': new Date().toISOString()
+    };
+    db.collection('comment')
+        .insert(newComment, function(err, result) {
+            if (err) {
+                console.log(err);
+                throw err;
+            }
+            res.end(req, res);
+        });    
 });
 
 /**
