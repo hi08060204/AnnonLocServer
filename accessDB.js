@@ -1,8 +1,6 @@
-var db = require('mongoskin')
-    .db('mongodb://localhost:27017/AnnonLoc');
+var db = require('mongoskin').db('mongodb://localhost:27017/AnnonLoc');
 var ObjectID = require('mongoskin').ObjectID;
-var host = 
-    'http://ec2-52-88-224-149.us-west-2.compute.amazonaws.com:3000';
+var host = 'http://ec2-52-88-224-149.us-west-2.compute.amazonaws.com:3000';
 
 exports.getNearbyLocation = function(req, res, next) {
     db.collection('location')
