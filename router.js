@@ -38,8 +38,12 @@ getCommentByLocation = function(req, res, next) {
     var mapper = function() { 
         emit(this.locId, { 'time': this.time, 'text': this.text }); 
     };
-    var reducer = function(key, values) { 
-        return { 'comment': values }; 
+    var reducer = function(key, values) {
+        values.sort(function(a,b) {
+            return new Date(b.time) > new Date(b.time)? 1 : -1;
+        });
+        var end = (values.length < 3)? : values.length : 3;
+        return { 'comment': values.slice(0, end) }; 
     };
 
     // Utilize mongodb mapReduce to group comments into array
