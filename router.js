@@ -30,7 +30,7 @@ getNearbyLocation = function(req, res, next) {
         }); 
 };
 
-getCommentByLocation = function(req, res, next) {
+getLatestComments = function(req, res, next) {
 
     var query = { 
         'locId': { $in: req.lid },
@@ -76,23 +76,9 @@ convertFormat = function(req, res, next) {
         result[i].value.loc_info = locations[result[i]._id];
     }
     res.json(result); 
-}
+};
 
-/**
- * Receive location coordinates and retrieve nearby locations
- * and associated comments
- */
-router.get(
-    '/locations', 
-    getNearbyLocation, 
-    getCommentByLocation,
-    convertFormat);
-
-/**
- * Receive location id and retrieve the information of the specified 
- * location (all the comment/coordinate). Sorted by timestamp
- */
-router.get('/locations/:lid', function(req, res, next) {
+getCommentsByLocation = function(req, res, next) {
     var lid = new ObjectID(req.params.lid);
     
     db.collection('comment')
@@ -106,12 +92,9 @@ router.get('/locations/:lid', function(req, res, next) {
             }
             res.json(comments);
         });
-});
+};
 
-/**
- * Receive post for specified location and retrieve comments
- */
-router.post('/locations/:lid', function(req, res, next) {
+writeNewComment = function(req, res, next) {
     var newComment = {
        'text': req.params.text,
        'locId': req.params.locId,
@@ -123,9 +106,35 @@ router.post('/locations/:lid', function(req, res, next) {
                 console.log(err);
                 throw err;
             }
-            res.end(req, res);
+            next();
         });    
-});
+};
+
+/**
+ * Receive location coordinates and retrieve nearby locations
+ * and associated comments
+ */
+router.get(
+    '/locations', 
+    getNearbyLocation, 
+    getLatestComments,
+    convertFormat);
+
+/**
+ * Receive location id and retrieve the information of the specified 
+ * location (all the comment/coordinate). Sorted by timestamp
+ */
+router.get(
+    '/locations/:lid', 
+    getCommentsByLocation);
+
+/**
+ * Receive post for specified location and retrieve comments
+ */
+router.post(
+    '/locations/:lid',
+    writeNewComment,
+    getCommentsByLocation);
 
 /**
  * Receive coordinates/name/category to create new location
