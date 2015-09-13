@@ -1,13 +1,10 @@
-var express = require('express');
-var router = express.Router();
 var db = require('mongoskin')
     .db('mongodb://localhost:27017/AnnonLoc');
-var accessDB = require('./accessDB');
 var ObjectID = require('mongoskin').ObjectID;
-var host = 'http://ec2-52-88-224-149.us-west-2.compute.amazonaws.com:3000';
+var host = 
+    'http://ec2-52-88-224-149.us-west-2.compute.amazonaws.com:3000';
 
-
-getNearbyLocation = function(req, res, next) {
+exports.getNearbyLocation = function(req, res, next) {
     db.collection('location')
         .find()
         .toArray(function(err, locations) {
@@ -32,7 +29,7 @@ getNearbyLocation = function(req, res, next) {
         }); 
 };
 
-getLatestComments = function(req, res, next) {
+exports.getLatestComments = function(req, res, next) {
 
     var query = { 
         'locId': { $in: req.lid },
@@ -71,16 +68,7 @@ getLatestComments = function(req, res, next) {
         });
 };
 
-convertFormat = function(req, res, next) {
-    var result = req.result; 
-    var locations = req.locations;
-    for (var i=0;i<result.length;i++) {
-        result[i].value.loc_info = locations[result[i]._id];
-    }
-    res.json(result); 
-};
-
-getCommentsByLocation = function(req, res, next) {
+exports.getCommentsByLocation = function(req, res, next) {
     var lid = new ObjectID(req.params.lid);
     
     db.collection('comment')
@@ -96,7 +84,7 @@ getCommentsByLocation = function(req, res, next) {
         });
 };
 
-writeNewComment = function(req, res, next) {
+exports.writeNewComment = function(req, res, next) {
     var newComment = {
        'text': req.params.text,
        'locId': req.params.locId,
@@ -112,37 +100,3 @@ writeNewComment = function(req, res, next) {
         });    
 };
 
-/**
- * Receive location coordinates and retrieve nearby locations
- * and associated comments
- */
-router.get(
-    '/locations', 
-    accessDB.getNearbyLocation, 
-    accessDB.getLatestComments,
-    convertFormat);
-
-/**
- * Receive location id and retrieve the information of the specified 
- * location (all the comment/coordinate). Sorted by timestamp
- */
-router.get(
-    '/locations/:lid', 
-    accessDB.getCommentsByLocation);
-
-/**
- * Receive post for specified location and retrieve comments
- */
-router.post(
-    '/locations/:lid',
-    accessDB.writeNewComment,
-    accessDB.getCommentsByLocation);
-
-/**
- * Receive coordinates/name/category to create new location
- */
-router.post('/locations', function(req, res, next) {
-    res.send("create a new location");
-});
-
-module.exports = router;
