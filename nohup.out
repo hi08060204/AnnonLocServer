@@ -125,3 +125,7 @@ GET /locations?latitude=34.0277122&longtitude=-118.2906101
 GET /locations?latitude=34.0277122&longtitude=-118.2906101
 GET /locations?latitude=34.02745619330885&longtitude=-118.28840409401664
 GET /locations?latitude=34.02745619330885&longtitude=-118.28840409401664
+GET /locations?latitude=34.0277582&longtitude=-118.2905357
+GET /locations?latitude=34.0277582&longtitude=-118.2905357
+GET /locations?latitude=34.0277582&longtitude=-118.2905357
+GET /locations?latitude=34.0277582&longtitude=-118.2905357
