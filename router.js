@@ -40,9 +40,9 @@ getCommentByLocation = function(req, res, next) {
     };
     var reducer = function(key, values) {
         values.sort(function(a,b) {
-            return new Date(b.time) > new Date(b.time)? 1 : -1;
+            return new Date(b.time) > new Date(b.time)? -1 : 1;
         });
-        var end = (values.length < 3)? : values.length : 3;
+        var end = (values.length < 3)? values.length : 3;
         return { 'comment': values.slice(0, end) }; 
     };
 

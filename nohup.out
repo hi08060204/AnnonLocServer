@@ -161,3 +161,26 @@ Error: listen EADDRINUSE
     at Function.Module._load (module.js:310:12)
 listening at port 3000
 GET /locations/
+GET /locations?latitude=34.0277199&longtitude=-118.2905696
+GET /locations?latitude=34.0277199&longtitude=-118.2905696
+GET /locations?latitude=34.0277199&longtitude=-118.2905696
+GET /locations?latitude=34.0277199&longtitude=-118.2905696
+GET /locations?latitude=34.0277687&longtitude=-118.290583
+GET /locations?latitude=34.0277687&longtitude=-118.290583
+GET /locations?latitude=34.0277687&longtitude=-118.290583
+GET /locations?latitude=34.0277687&longtitude=-118.290583
+GET /locations?latitude=34.0277687&longtitude=-118.290583
+GET /locations?latitude=34.0277687&longtitude=-118.290583
+GET /locations?latitude=34.0277687&longtitude=-118.290583
+GET /locations?latitude=34.0277687&longtitude=-118.290583
+GET /locations?latitude=34.0277687&longtitude=-118.290583
+GET /locations?latitude=34.0277687&longtitude=-118.290583
+GET /locations/55f3162e639b2dbb1e72fc9b
+GET /locations/55f3162e639b2dbb1e72fc9b
+GET /favicon.ico
+GET /locations?latitude=34.0277687&longtitude=-118.290583
+GET /locations?latitude=34.0277687&longtitude=-118.290583
+GET /locations/55f3162e639b2dbb1e72fc9b
+GET /locations/55f3162e639b2dbb1e72fc9b
+GET /locations/55f3162e639b2dbb1e72fc9b
+GET /favicon.ico
