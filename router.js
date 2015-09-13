@@ -19,7 +19,8 @@ getNearbyLocation = function(req, res, next) {
                 locs[locations[i]._id] = { 
                     'name' : locations[i].name,
                     'latitude' : locations[i].latitude,
-                    'longitude' : locations[i].longitude
+                    'longitude' : locations[i].longitude,
+                    'img' : locations[i].img
                 }
                 lid.push(locations[i]._id);
             }
@@ -31,13 +32,16 @@ getNearbyLocation = function(req, res, next) {
 
 getCommentByLocation = function(req, res, next) {
 
-    var query = { 'locId': { $in: req.lid } };
+    var query = { 
+        'locId': { $in: req.lid },
+    };
     var mapper = function() { 
         emit(this.locId, { 'time': this.time, 'text': this.text }); 
     };
     var reducer = function(key, values) { 
         return { 'comment': values }; 
     };
+
     // Utilize mongodb mapReduce to group comments into array
     db.collection('comment')
         .mapReduce(
@@ -74,7 +78,8 @@ convertFormat = function(req, res, next) {
  * Receive location coordinates and retrieve nearby locations
  * and associated comments
  */
-router.get('/locations', 
+router.get(
+    '/locations', 
     getNearbyLocation, 
     getCommentByLocation,
     convertFormat);
@@ -85,9 +90,11 @@ router.get('/locations',
  */
 router.get('/locations/:lid', function(req, res, next) {
     var lid = new ObjectID(req.params.lid);
-    console.log(lid);
+    
     db.collection('comment')
-        .find({ 'locId': lid }, {sort: { 'time': -1 } })
+        .find(
+            { 'locId': lid }, 
+            { sort: { 'time': -1 } })
         .toArray(function(err, comments) {
             if (err) {
                 console.log(err);
