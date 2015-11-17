@@ -4,183 +4,41 @@ GET /locations/
 GET /locations/
 GET /locations/
 GET /locations/
-GET /favicon.ico
 GET /locations/
-GET /favicon.ico
-GET /?latitude=34.0277709&longtitude=-118.2905772
-GET /?latitude=34.0277709&longtitude=-118.2905772
+listening at port 3000
+listening at port 3000
+GET /locations/
+GET /locations/
+GET /locations/
+GET /locations/
+GET /locations/
+GET /locations/
+GET /locations/
+GET /locations/55f3162e639b2dbb1e72fc9b
 GET /
-GET /
-GET /locations
-GET /locations?latitude=34.0277709&longtitude=-118.2905772
-GET /locations?latitude=34.0277709&longtitude=-118.2905772
-GET /locations?latitude=34.0277709&longtitude=-118.2905772
-GET /locations?latitude=34.0277709&longtitude=-118.2905772
-GET /locations?latitude=34.0277604&longtitude=-118.2905611
-GET /locations?latitude=34.0277604&longtitude=-118.2905611
-GET /locations?latitude=34.0277604&longtitude=-118.2905611
-GET /locations?latitude=34.0277604&longtitude=-118.2905611
-GET /locations?latitude=34.0277604&longtitude=-118.2905611
-GET /locations?latitude=34.0277604&longtitude=-118.2905611
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-GET /locations/
-GET /locations/
-GET /locations/
-GET /locations/
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-GET /locations/
-GET /locations/
-GET /locations/
-GET /locations/
-GET /locations/
-GET /locations/
-GET /locations/
-GET /locations/
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-listening at port 3000
-events.js:85
-      throw er; // Unhandled 'error' event
-            ^
-Error: listen EADDRINUSE
-    at exports._errnoException (util.js:746:11)
-    at Server._listen2 (net.js:1156:14)
-    at listen (net.js:1182:10)
-    at Server.listen (net.js:1267:5)
-    at EventEmitter.listen (/home/ubuntu/AnnonLocServer/node_modules/express/lib/application.js:617:24)
-    at Object.<anonymous> (/home/ubuntu/AnnonLocServer/server.js:28:5)
-    at Module._compile (module.js:460:26)
-    at Object.Module._extensions..js (module.js:478:10)
-    at Module.load (module.js:355:32)
-    at Function.Module._load (module.js:310:12)
-GET /locations/
-GET /locations/
-GET /locations/
-GET /locations/
-listening at port 3000
-events.js:85
-      throw er; // Unhandled 'error' event
-            ^
-Error: listen EADDRINUSE
-    at exports._errnoException (util.js:746:11)
-    at Server._listen2 (net.js:1156:14)
-    at listen (net.js:1182:10)
-    at Server.listen (net.js:1267:5)
-    at EventEmitter.listen (/home/ubuntu/AnnonLocServer/node_modules/express/lib/application.js:617:24)
-    at Object.<anonymous> (/home/ubuntu/AnnonLocServer/server.js:28:5)
-    at Module._compile (module.js:460:26)
-    at Object.Module._extensions..js (module.js:478:10)
-    at Module.load (module.js:355:32)
-    at Function.Module._load (module.js:310:12)
-GET /locations/
-GET /locations/
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-listening at port 3000
-listening at port 3000
-GET /locations/
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-GET /locations
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-GET /locations?latitude=34.0277669&longtitude=-118.2905626
-listening at port 3000
-GET /locations?latitude=34.0277555&longtitude=-118.2905496
-GET /locations?latitude=34.0277555&longtitude=-118.2905496
-GET /locations?latitude=34.0277555&longtitude=-118.2905496
-GET /locations?latitude=34.0277555&longtitude=-118.2905496
-GET /locations?latitude=34.0277405&longtitude=-118.2905597
-GET /locations?latitude=34.0277405&longtitude=-118.2905597
-GET /locations/
-listening at port 3000
-GET /locations/
-GET /locations/
-listening at port 3000
-GET /locations/
-GET /locations/
 GET /favicon.ico
-GET /locations?latitude=-90.0&longtitude=30.21947
-GET /locations?latitude=-90.0&longtitude=30.21947
+GET /locations
 GET /locations?latitude=37.422005&longtitude=-122.084095
 GET /locations?latitude=37.422005&longtitude=-122.084095
-GET /locations?latitude=34.0277366&longtitude=-118.2905694
-GET /locations?latitude=34.0277366&longtitude=-118.2905694
-GET /locations?latitude=34.0277122&longtitude=-118.2906101
-GET /locations?latitude=34.0277122&longtitude=-118.2906101
-GET /locations?latitude=34.0277122&longtitude=-118.2906101
-GET /locations?latitude=34.0277122&longtitude=-118.2906101
-GET /locations?latitude=34.02745619330885&longtitude=-118.28840409401664
-GET /locations?latitude=34.02745619330885&longtitude=-118.28840409401664
-GET /locations?latitude=34.0277582&longtitude=-118.2905357
-GET /locations?latitude=34.0277582&longtitude=-118.2905357
-GET /locations?latitude=34.0277582&longtitude=-118.2905357
-GET /locations?latitude=34.0277582&longtitude=-118.2905357
-listening at port 3000
-events.js:85
-      throw er; // Unhandled 'error' event
-            ^
-Error: listen EADDRINUSE
-    at exports._errnoException (util.js:746:11)
-    at Server._listen2 (net.js:1156:14)
-    at listen (net.js:1182:10)
-    at Server.listen (net.js:1267:5)
-    at EventEmitter.listen (/home/ubuntu/AnnonLocServer/node_modules/express/lib/application.js:617:24)
-    at Object.<anonymous> (/home/ubuntu/AnnonLocServer/server.js:30:5)
-    at Module._compile (module.js:460:26)
-    at Object.Module._extensions..js (module.js:478:10)
-    at Module.load (module.js:355:32)
-    at Function.Module._load (module.js:310:12)
-listening at port 3000
-events.js:85
-      throw er; // Unhandled 'error' event
-            ^
-Error: listen EADDRINUSE
-    at exports._errnoException (util.js:746:11)
-    at Server._listen2 (net.js:1156:14)
-    at listen (net.js:1182:10)
-    at Server.listen (net.js:1267:5)
-    at EventEmitter.listen (/home/ubuntu/AnnonLocServer/node_modules/express/lib/application.js:617:24)
-    at Object.<anonymous> (/home/ubuntu/AnnonLocServer/server.js:30:5)
-    at Module._compile (module.js:460:26)
-    at Object.Module._extensions..js (module.js:478:10)
-    at Module.load (module.js:355:32)
-    at Function.Module._load (module.js:310:12)
+GET /locations/55f31635639b2dbb1e72fc9d
+GET /locations/id
+GET /locations/id
+GET /locations/
+GET /locations/55f3162e639b2dbb1e72fc9b
+POST /locations/55f3162e639b2dbb1e72fc9b
+GET /locations/55f3162e639b2dbb1e72fc9b
+GET /locations/
+GET /locations/55f3162e639b2dbb1e72fc9b
+GET /locations/55f3162e639b2dbb1e72fc9b
+GET /locations/55f3162e639b2dbb1e72fc9b
+POST /locations/55f3162e639b2dbb1e72fc9b
 listening at port 3000
 GET /locations/
-GET /locations?latitude=34.0277199&longtitude=-118.2905696
-GET /locations?latitude=34.0277199&longtitude=-118.2905696
-GET /locations?latitude=34.0277199&longtitude=-118.2905696
-GET /locations?latitude=34.0277199&longtitude=-118.2905696
-GET /locations?latitude=34.0277687&longtitude=-118.290583
-GET /locations?latitude=34.0277687&longtitude=-118.290583
-GET /locations?latitude=34.0277687&longtitude=-118.290583
-GET /locations?latitude=34.0277687&longtitude=-118.290583
-GET /locations?latitude=34.0277687&longtitude=-118.290583
-GET /locations?latitude=34.0277687&longtitude=-118.290583
-GET /locations?latitude=34.0277687&longtitude=-118.290583
-GET /locations?latitude=34.0277687&longtitude=-118.290583
-GET /locations?latitude=34.0277687&longtitude=-118.290583
-GET /locations?latitude=34.0277687&longtitude=-118.290583
-GET /locations/55f3162e639b2dbb1e72fc9b
-GET /locations/55f3162e639b2dbb1e72fc9b
 GET /favicon.ico
-GET /locations?latitude=34.0277687&longtitude=-118.290583
-GET /locations?latitude=34.0277687&longtitude=-118.290583
+GET /locations/
+GET /locations?latitude=37.32345754699548&longtitude=-121.94052995219354
+GET /locations?latitude=37.32345754699548&longtitude=-121.94052995219354
 GET /locations/55f3162e639b2dbb1e72fc9b
 GET /locations/55f3162e639b2dbb1e72fc9b
-GET /locations/55f3162e639b2dbb1e72fc9b
+GET /locations/
 GET /favicon.ico

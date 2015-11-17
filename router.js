@@ -3,10 +3,17 @@ var router = express.Router();
 var accessDB = require('./accessDB');
 
 convertFormat = function(req, res, next) {
-    var result = req.result; 
+    var map = req.map; 
     var locations = req.locations;
-    for (var i=0;i<result.length;i++) {
-        result[i].value.loc_info = locations[result[i]._id];
+    var result = [];
+    for (var i=0;i<locations.length;i++) {
+        result.push({
+            '_id' : locations[i]._id,
+            'name' : locations[i].name,
+            'loc' : locations[i].loc,
+            'img' : locations[i].img,
+            'comments' : map[locations[i]._id]
+        });
     }
     res.json(result); 
 };

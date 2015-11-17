@@ -3,8 +3,18 @@ var ObjectID = require('mongoskin').ObjectID;
 var host = 'http://ec2-52-88-224-149.us-west-2.compute.amazonaws.com:3000';
 
 exports.getNearbyLocation = function(req, res, next) {
+
     db.collection('location')
-        .find()
+        .find(
+            { 'loc': 
+                { 
+                    '$near': [ 
+                        parseFloat(req.query.longitude), 
+                        parseFloat(req.query.latitude) 
+                    ] 
+                } 
+            }
+        )
         .toArray(function(err, locations) {
             if (err) { 
                 console.log(err);
@@ -12,13 +22,13 @@ exports.getNearbyLocation = function(req, res, next) {
             }
             var locs = [];
             var lid = [];
-            for (var i=0;i<locations.length;i++) { 
-                locs[locations[i]._id] = { 
+            for (var i=0;i<locations.length;i++) {
+                locs.push({ 
+                    '_id' : locations[i]._id,
                     'name' : locations[i].name,
-                    'latitude' : locations[i].latitude,
-                    'longitude' : locations[i].longitude,
+                    'loc' : locations[i].loc,
                     'img' : host + locations[i].img
-                }
+                });
                 lid.push(locations[i]._id);
             }
             req.locations = locs;
@@ -40,7 +50,7 @@ exports.getLatestComments = function(req, res, next) {
             return new Date(b.time) > new Date(b.time)? -1 : 1;
         });
         var end = (values.length < 3)? values.length : 3;
-        return { 'comment': values.slice(0, end) }; 
+        return { 'comments': values.slice(0, end) }; 
     };
 
     // Utilize mongodb mapReduce to group comments into array
@@ -60,7 +70,11 @@ exports.getLatestComments = function(req, res, next) {
             collection
                 .find()
                 .toArray(function(err, r) {
-                req.result = r;
+                var map = []; 
+                for (var i=0;i<r.length;i++) {
+                    map[r[i]._id] = r[i].value.comments;
+                }
+                req.map = map;
                 next();
             });
         });
@@ -83,11 +97,13 @@ exports.getCommentsByLocation = function(req, res, next) {
 };
 
 exports.writeNewComment = function(req, res, next) {
+    
     var newComment = {
-       'text': req.params.text,
-       'locId': req.params.locId,
+       'text': req.body.text,
+       'locId': new ObjectID(req.params.lid),
        'time': new Date().toISOString()
     };
+    
     db.collection('comment')
         .insert(newComment, function(err, result) {
             if (err) {
@@ -95,6 +111,6 @@ exports.writeNewComment = function(req, res, next) {
                 throw err;
             }
             next();
-        });    
+        }); 
 };
 
