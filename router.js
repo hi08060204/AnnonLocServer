@@ -35,6 +35,7 @@ router.get(
  */
 router.get(
     '/locations/:lid', 
+    accessDB.isLocationValid,
     accessDB.getCommentsByLocation);
 
 /**
@@ -42,6 +43,7 @@ router.get(
  */
 router.post(
     '/locations/:lid',
+    accessDB.isLocationValid,
     accessDB.writeNewComment,
     accessDB.getCommentsByLocation);
 

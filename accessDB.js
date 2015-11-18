@@ -3,15 +3,22 @@ var ObjectID = require('mongoskin').ObjectID;
 var host = 'http://ec2-52-88-224-149.us-west-2.compute.amazonaws.com:3000';
 
 exports.getNearbyLocation = function(req, res, next) {
-
+    var longitude = parseFloat(req.query.longitude);
+    var latitude = parseFloat(req.query.latitude);
+    if (isNaN(longitude) || isNaN(latitude)) {
+        console.log("\tNO valid coordinate");
+        res.end();
+        return;
+    }
+    console.log("\tGET nearby locations");
     db.collection('location')
         .find(
             { 'loc': 
                 { 
                     '$near': [ 
-                        parseFloat(req.query.longitude), 
-                        parseFloat(req.query.latitude) 
-                    ] 
+                        longitude, 
+                        latitude
+                    ],
                 } 
             }
         )
@@ -34,11 +41,11 @@ exports.getNearbyLocation = function(req, res, next) {
             req.locations = locs;
             req.lid = lid;
             next(); 
-        }); 
+        });
 };
 
 exports.getLatestComments = function(req, res, next) {
-
+    console.log("\tGET latest comments");
     var query = { 
         'locId': { $in: req.lid },
     };
@@ -47,7 +54,7 @@ exports.getLatestComments = function(req, res, next) {
     };
     var reducer = function(key, values) {
         values.sort(function(a,b) {
-            return new Date(b.time) > new Date(b.time)? -1 : 1;
+            return new Date(a.time) > new Date(b.time)? -1 : 1;
         });
         var end = (values.length < 3)? values.length : 3;
         return { 'comments': values.slice(0, end) }; 
@@ -80,13 +87,35 @@ exports.getLatestComments = function(req, res, next) {
         });
 };
 
-exports.getCommentsByLocation = function(req, res, next) {
+exports.isLocationValid = function(req, res, next) {
     var lid = new ObjectID(req.params.lid);
-    
+    console.log("\tCHECK location valid " + lid);
+    db.collection('location')
+        .findOne({ '_id': lid }, function(err, result) {
+            if (result == null) {
+                console.log("\tlocation " + lid + " is not valid");
+                res.end();
+            } else {
+                next();
+            }
+        }); 
+}
+
+exports.getCommentsByLocation = function(req, res, next) {
+    var lid = new ObjectID(req.params.lid); 
+    console.log("\tGET comments at location " + lid);
+    db.collection('location')
+        .findOne({ '_id': lid }, function(err, result) {
+            if (result == null) {
+                console.log("shot");
+                res.end();
+                return;
+            }
+        }); 
     db.collection('comment')
         .find(
             { 'locId': lid }, 
-            { sort: { 'time': -1 } })
+            { sort: { 'datefield': 1 } })
         .toArray(function(err, comments) {
             if (err) {
                 console.log(err);
@@ -97,10 +126,11 @@ exports.getCommentsByLocation = function(req, res, next) {
 };
 
 exports.writeNewComment = function(req, res, next) {
-    
+    var lid = new ObjectID(req.params.lid);
+    console.log("\tPOST comment to location " + lid);
     var newComment = {
        'text': req.body.text,
-       'locId': new ObjectID(req.params.lid),
+       'locId': lid,
        'time': new Date().toISOString()
     };
     
