@@ -7,7 +7,7 @@ exports.getNearbyLocation = function(req, res, next) {
     var latitude = parseFloat(req.query.latitude);
     if (isNaN(longitude) || isNaN(latitude)) {
         console.log("\tNO valid coordinate");
-        res.end();
+        res.status(400).send("Bad Request");
         return;
     }
     console.log("\tGET nearby locations");
@@ -94,7 +94,7 @@ exports.isLocationValid = function(req, res, next) {
         .findOne({ '_id': lid }, function(err, result) {
             if (result == null) {
                 console.log("\tlocation " + lid + " is not valid");
-                res.end();
+                res.status(404).send("Wrong Location Id");
             } else {
                 next();
             }
@@ -104,14 +104,6 @@ exports.isLocationValid = function(req, res, next) {
 exports.getCommentsByLocation = function(req, res, next) {
     var lid = new ObjectID(req.params.lid); 
     console.log("\tGET comments at location " + lid);
-    db.collection('location')
-        .findOne({ '_id': lid }, function(err, result) {
-            if (result == null) {
-                console.log("shot");
-                res.end();
-                return;
-            }
-        }); 
     db.collection('comment')
         .find(
             { 'locId': lid }, 
@@ -127,10 +119,23 @@ exports.getCommentsByLocation = function(req, res, next) {
 
 exports.writeNewComment = function(req, res, next) {
     var lid = new ObjectID(req.params.lid);
+    var text = req.body.text;
+    var name = req.body.name;
+    var icon_url = req.body.icon_url;
+    if (typeof text == 'undefined' || 
+        typeof name == 'undefined' || 
+        typeof icon_url == 'undefined') {
+        res.status(400).send('Bad Request');
+        return;
+    }
+
     console.log("\tPOST comment to location " + lid);
+    console.log("\t" + text);
     var newComment = {
-       'text': req.body.text,
+       'text': text,
        'locId': lid,
+       'name': name,
+       'icon_url': icon_url,
        'time': new Date().toISOString()
     };
     

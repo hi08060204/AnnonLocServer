@@ -2,6 +2,30 @@ var express = require('express');
 var router = express.Router();
 var accessDB = require('./accessDB');
 
+var adj_list = [
+                    "stupid",
+                    "beautiful",
+                    "elegant",
+                    "brave"
+                ];
+var noun_list = [
+                    "apple",
+                    "orange",
+                    "cat",
+                    "dog"
+                ];
+
+genRandomName = function(req, res, next) {
+    var adj_id = Math.floor(Math.random() * adj_list.length);
+    var n_id = Math.floor(Math.random() * noun_list.length);
+    var output = { 
+        "name" : adj_list[adj_id] + " " + noun_list[n_id],
+        "icon_url" : ""
+    }
+    res.send(output);
+};
+
+
 convertFormat = function(req, res, next) {
     var map = req.map; 
     var locations = req.locations;
@@ -18,6 +42,8 @@ convertFormat = function(req, res, next) {
     res.json(result); 
 };
 
+router.get('/randomId',
+        genRandomName);
 
 /**
  * Receive location coordinates and retrieve nearby locations
