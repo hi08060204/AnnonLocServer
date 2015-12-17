@@ -46,8 +46,8 @@ exports.getNearbyLocation = function(req, res, next) {
 
 exports.aggregateComments = function(req, res, next) {
     console.log("\tGET latest comments");
-    var limit = req.query.limit !== undefined ?
-        parseInt(req.query.limit) : 3;
+    var limit = req.query.top_comments !== undefined ?
+        parseInt(req.query.top_comments) : 3;
     var query = { 
         'locId': { $in: req.lid }
     };
