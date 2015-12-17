@@ -15,12 +15,15 @@ var noun_list = [
                     "dog"
                 ];
 
+var icon_number = 40;
+
 genRandomName = function(req, res, next) {
     var adj_id = Math.floor(Math.random() * adj_list.length);
     var n_id = Math.floor(Math.random() * noun_list.length);
+    var icon_id = Math.floor(Math.random() * icon_number);
     var output = { 
         "name" : adj_list[adj_id] + " " + noun_list[n_id],
-        "icon_url" : ""
+        "icon_id" : icon_id.toString()
     }
     res.send(output);
 };
@@ -50,9 +53,9 @@ router.get('/randomId',
  * and associated comments
  */
 router.get(
-    '/locations', 
+    '/nearLocations', 
     accessDB.getNearbyLocation, 
-    accessDB.getLatestComments,
+    accessDB.aggregateComments,
     convertFormat);
 
 /**
@@ -60,7 +63,7 @@ router.get(
  * location (all the comment/coordinate). Sorted by timestamp
  */
 router.get(
-    '/locations/:lid', 
+    '/locations/:lid/comments', 
     accessDB.isLocationValid,
     accessDB.getCommentsByLocation);
 
@@ -68,7 +71,7 @@ router.get(
  * Receive post for specified location and retrieve comments
  */
 router.post(
-    '/locations/:lid',
+    '/locations/:lid/comments',
     accessDB.isLocationValid,
     accessDB.writeNewComment,
     accessDB.getCommentsByLocation);
@@ -78,6 +81,17 @@ router.post(
  */
 router.post('/locations', function(req, res, next) {
     res.send("create a new location");
+});
+
+router.get(
+    '/locations/:lid', 
+    accessDB.isLocationValid,
+    accessDB.getLocationById,
+    accessDB.aggregateComments,
+    convertFormat);
+
+router.get('/comments', function(req, res, next) {
+    res.send("get all comments");
 });
 
 module.exports = router;

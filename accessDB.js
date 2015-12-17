@@ -44,10 +44,12 @@ exports.getNearbyLocation = function(req, res, next) {
         });
 };
 
-exports.getLatestComments = function(req, res, next) {
+exports.aggregateComments = function(req, res, next) {
     console.log("\tGET latest comments");
+    var limit = req.query.limit !== undefined ?
+        parseInt(req.query.limit) : 3;
     var query = { 
-        'locId': { $in: req.lid },
+        'locId': { $in: req.lid }
     };
     var mapper = function() { 
         emit(this.locId, { 'time': this.time, 'text': this.text }); 
@@ -56,8 +58,7 @@ exports.getLatestComments = function(req, res, next) {
         values.sort(function(a,b) {
             return new Date(a.time) > new Date(b.time)? -1 : 1;
         });
-        var end = (values.length < 3)? values.length : 3;
-        return { 'comments': values.slice(0, end) }; 
+        return { 'comments' : values }; 
     };
 
     // Utilize mongodb mapReduce to group comments into array
@@ -67,6 +68,7 @@ exports.getLatestComments = function(req, res, next) {
         reducer,
         {
             query: query,
+            limit: limit,
             out: 'result'
         },
         function(err, collection) {
@@ -78,8 +80,12 @@ exports.getLatestComments = function(req, res, next) {
                 .find()
                 .toArray(function(err, r) {
                 var map = []; 
-                for (var i=0;i<r.length;i++) {
-                    map[r[i]._id] = r[i].value.comments;
+                if (limit == 1) {
+                    map[r[0]._id] = r[0].value;
+                } else {
+                    for (var i=0;i<r.length;i++) {
+                        map[r[i]._id] = r[i].value.comments;
+                    }
                 }
                 req.map = map;
                 next();
@@ -103,11 +109,17 @@ exports.isLocationValid = function(req, res, next) {
 
 exports.getCommentsByLocation = function(req, res, next) {
     var lid = new ObjectID(req.params.lid); 
+    var offset = req.query.offset !== undefined ? 
+        parseInt(req.query.offset) : 0;
+    var limit = req.query.limit !== undefined ? 
+        parseInt(req.query.limit) : 100;
     console.log("\tGET comments at location " + lid);
     db.collection('comment')
         .find(
             { 'locId': lid }, 
             { sort: { 'datefield': 1 } })
+        .skip(offset)
+        .limit(limit)
         .toArray(function(err, comments) {
             if (err) {
                 console.log(err);
@@ -121,10 +133,9 @@ exports.writeNewComment = function(req, res, next) {
     var lid = new ObjectID(req.params.lid);
     var text = req.body.text;
     var name = req.body.name;
-    var icon_url = req.body.icon_url;
-    if (typeof text == 'undefined' || 
-        typeof name == 'undefined' || 
-        typeof icon_url == 'undefined') {
+    var icon_id = req.body.icon_id;
+    if (text !== undefined || name !== undefined || icon_id !== undefined) {
+        console.log("\tWrong POST params");
         res.status(400).send('Bad Request');
         return;
     }
@@ -135,7 +146,7 @@ exports.writeNewComment = function(req, res, next) {
        'text': text,
        'locId': lid,
        'name': name,
-       'icon_url': icon_url,
+       'icon_id': icon_id,
        'time': new Date().toISOString()
     };
     
@@ -149,3 +160,24 @@ exports.writeNewComment = function(req, res, next) {
         }); 
 };
 
+exports.getLocationById = function(req, res, next) {
+    var lid = new ObjectID(req.params.lid); 
+    req.lid = [lid];
+    db.collection('location')
+        .find({ '_id': lid })
+        .toArray(function(err, locations) {
+            if (err) {
+                console.log(err);
+                throw err;
+            }
+            req.locations = locations;
+            next();
+        }); 
+};
+
+exports.createNewLocation = function(req, res, next) {
+    
+
+
+
+};
